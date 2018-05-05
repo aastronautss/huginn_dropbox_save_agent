@@ -52,10 +52,12 @@ module Agents
       io = get_io(event)
       return unless io.present?
 
-      if file_exists?
-        handle_overwrite(io)
-      else
-        save_file(io)
+      interpolate_with(event) do
+        if file_exists?
+          handle_overwrite(io)
+        else
+          save_file(io)
+        end
       end
     end
 
