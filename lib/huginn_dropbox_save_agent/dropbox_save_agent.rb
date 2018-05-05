@@ -52,13 +52,7 @@ module Agents
       io = get_io(event)
       return unless io.present?
 
-      interpolate_with(event) do
-        if file_exists?
-          handle_overwrite(io)
-        else
-          save_file(io)
-        end
-      end
+      interpolate_with(event) { file_exists? ? handle_overwrite(io) : save_file(io) }
     end
 
     def save_file(io, filename: full_file_path)
